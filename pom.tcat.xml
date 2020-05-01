@@ -32,6 +32,8 @@
 						</goals>
 						<phase>package</phase>
 						<configuration>
+							<!-- although the documentation says this works - it doesn't -->
+							<!-- <port>10001</port> -->
 							<path>/</path>
 							<enableNaming>false</enableNaming>
 							<finalName>thundercat.jar</finalName>
