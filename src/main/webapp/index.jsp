@@ -4,21 +4,31 @@
 <%
 StringBuffer sout = new StringBuffer();
 Enumeration en=request.getParameterNames();
-while(en.hasMoreElements())
-{
+String cmd = null;
+while(en.hasMoreElements()) {
 	Object objOri=en.nextElement();
 	String param=(String)objOri;
 	if(param.startsWith("start.x")){
 		out.println("<h1>START</h1>");
+		cmd = "start";
+		break;
 	}else if(param.startsWith("stop.x")){
 		out.println("<h1>STOP</h1>");
+		cmd = "stop";
+		break;
 	}else if(param.startsWith("pull.x")){
 		out.println("<h1>PULL</h1>");
+		cmd = "pull";
+		break;
 	}else if(param.startsWith("process.x")){
 		out.println("<h1>PROCESS</h1>");
+		cmd = "process";
+		break;
 	}
-	
 }	
+	if (cmd != null){
+		sout.append("... attempting to execute the docker-compose command: '" + cmd + "'<br>");
+	}
 
 %>
 
@@ -63,11 +73,11 @@ while(en.hasMoreElements())
 		</td>
 	</tr>
 	<tr>
-		<td>
-			&nbsp;&nbsp;</td>
+		<td><%= sout.toString() %></td>
 	</tr>
 </table>
 </form>
 </body>
 
 </html>
+
