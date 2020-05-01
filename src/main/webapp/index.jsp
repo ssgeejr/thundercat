@@ -5,34 +5,40 @@
 StringBuffer sout = new StringBuffer();
 Enumeration en=request.getParameterNames();
 String cmd = null;
+String[] cmdlist = null;
 while(en.hasMoreElements()) {
 	Object objOri=en.nextElement();
 	String param=(String)objOri;
 	if(param.startsWith("start.x")){
-		out.println("<h1>START</h1>");
+//		out.println("<h1>START</h1>");
 		cmd = "start";
+		cmdlist = new String[]{"docker-compose", "up", "-d"};
 		break;
 	}else if(param.startsWith("stop.x")){
-		out.println("<h1>STOP</h1>");
+//		out.println("<h1>STOP</h1>");
 		cmd = "stop";
+		cmdlist = new String[]{"docker-compose", "down"};
 		break;
 	}else if(param.startsWith("pull.x")){
-		out.println("<h1>PULL</h1>");
+//		out.println("<h1>PULL</h1>");
 		cmd = "pull";
+		cmdlist = new String[]{"docker-compose", "pull"};
 		break;
 	}else if(param.startsWith("process.x")){
-		out.println("<h1>PROCESS</h1>");
+//		out.println("<h1>PROCESS</h1>");
 		cmd = "ps";
+		cmdlist = new String[]{"docker-compose", "ps"};
 		break;
 	}
 }	
 	if (cmd != null){
-		System.out.println("... executing command (" + cmd + ")");
-		out.println("... executing command (" + cmd + ")");
-		sout.append("... attempting to execute the docker-compose command: '" + cmd + "'<br>");
-		ProcessBuilder pb = new ProcessBuilder("docker-compose", cmd);
+		ProcessBuilder pb = new ProcessBuilder(cmdlist);
+		System.out.println("... executing command (" + pb.command() + ")");
+//		out.println("... executing command (" + pb.command() + ")");
+		sout.append("... attempting to execute the docker-compose command: '" + pb.command() + "'<br>");
 		pb.directory(new File("/opt/projects/testcompose/"));
 		Process p = pb.start();
+
 		DataInputStream dis = new DataInputStream(p.getInputStream());
 		String disr = dis.readLine();
 		while ( disr != null ) {
