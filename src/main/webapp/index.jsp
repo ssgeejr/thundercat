@@ -28,7 +28,17 @@ while(en.hasMoreElements()) {
 }	
 	if (cmd != null){
 		sout.append("... attempting to execute the docker-compose command: '" + cmd + "'<br>");
-	}
+		ProcessBuilder pb = new ProcessBuilder("docker-compose", "ps");
+		pb.directory("/opt/projects/testcompose/");
+		Process p = pb.start();
+		DataInputStream dis = new DataInputStream(p.getOutputStream());
+		String disr = dis.readLine();
+		while ( disr != null ) {
+   			sout.append(disr + "<br>");
+    		disr = dis.readLine();
+    	}//end while
+    	dis.close();
+	}//end if
 
 %>
 
