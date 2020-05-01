@@ -1,4 +1,4 @@
-# thundercat
+# thundercat: a docker-compose UI
 Start/Stop/Pull/Process for Docker-Compose
 
 You aren't going to find anything fancy here - this is straight utilitarian software
