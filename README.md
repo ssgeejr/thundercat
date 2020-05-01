@@ -1,5 +1,9 @@
 # thundercat
-Start/Stop/Pull for Docker-Compose
+Start/Stop/Pull/Process for Docker-Compose
+
+You aren't going to find anything fancy here - this is straight utilitarian software
+
+![Screenshot](screenshot.png)
 
 Notes;
 ```
