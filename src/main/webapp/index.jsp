@@ -57,35 +57,41 @@ while(en.hasMoreElements()) {
 .auto-style1 {
 	text-align: right;
 }
+.auto-style2 {
+	text-align: left;
+}
+.auto-style3 {
+	text-align: center;
+}
 </style>
 </head>
 
 <body>
 <form id="tc" method="post" action="/index.jsp">
-
-<table style="width: 100%">
+<div align="center">
+<table style="width: 400pt; border: 1px solid red;">
 	<tr>
-		<td class="auto-style1">
-		<img height="42" src="thundercats.logo_sm.png" width="42" /></td>
+		<td class="auto-style3">
+		<img height="98" src="thundercats_logo.png" width="323" /></td>
 	</tr>
 	<tr>
 		<td>
 		<table style="width: 100%">
 			<tr>
 				<td class="auto-style1" style="width:50%; height: 44px;">START</td>
-				<td style="height: 44px"><input type="image" name="start" value="0" alt="Start" src="start.png"/></td>
+				<td style="height: 44px" class="auto-style2"><input type="image" name="start" value="0" alt="Start" src="start.png"/></td>
 			</tr>
 			<tr>
 				<td class="auto-style1" style="width:50%">STOP</td>
-				<td><input type="image" name="stop" value="1" alt="Stop" src="stop.png"/></td>
+				<td class="auto-style2"><input type="image" name="stop" value="1" alt="Stop" src="stop.png"/></td>
 			</tr>
 			<tr>
 				<td class="auto-style1" style="width:50%">PULL</td>
-				<td><input type="image" name="pull" value="2" alt="Pull" src="pull.png"/></td>
+				<td class="auto-style2"><input type="image" name="pull" value="2" alt="Pull" src="pull.png"/></td>
 			</tr>
 			<tr>
 				<td class="auto-style1" style="width:50%">PROCESS</td>
-				<td><input type="image" name="process" value="3" alt="Process" src="process.png"/></td>
+				<td class="auto-style2"><input type="image" name="process" value="3" alt="Process" src="process.png"/></td>
 			</tr>
 		</table>
 		</td>
@@ -94,7 +100,9 @@ while(en.hasMoreElements()) {
 		<td><%= sout.toString() %></td>
 	</tr>
 </table>
+</div>
 </form>
+
 </body>
 
 </html>
