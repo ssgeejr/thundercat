@@ -22,16 +22,18 @@ while(en.hasMoreElements()) {
 		break;
 	}else if(param.startsWith("process.x")){
 		out.println("<h1>PROCESS</h1>");
-		cmd = "process";
+		cmd = "ps";
 		break;
 	}
 }	
 	if (cmd != null){
+		System.out.println("... executing command (" + cmd + ")");
+		out.println("... executing command (" + cmd + ")");
 		sout.append("... attempting to execute the docker-compose command: '" + cmd + "'<br>");
-		ProcessBuilder pb = new ProcessBuilder("docker-compose", "ps");
-		pb.directory("/opt/projects/testcompose/");
+		ProcessBuilder pb = new ProcessBuilder("docker-compose", cmd);
+		pb.directory(new File("/opt/projects/testcompose/"));
 		Process p = pb.start();
-		DataInputStream dis = new DataInputStream(p.getOutputStream());
+		DataInputStream dis = new DataInputStream(p.getInputStream());
 		String disr = dis.readLine();
 		while ( disr != null ) {
    			sout.append(disr + "<br>");
@@ -53,7 +55,7 @@ while(en.hasMoreElements()) {
 </head>
 
 <body>
-<form id="tc" method="post" action="index.jsp">
+<form id="tc" method="post" action="/index.jsp">
 
 <table style="width: 100%">
 	<tr>
