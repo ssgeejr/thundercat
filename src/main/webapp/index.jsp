@@ -36,7 +36,7 @@ while(en.hasMoreElements()) {
 		System.out.println("... executing command (" + pb.command() + ")");
 //		out.println("... executing command (" + pb.command() + ")");
 		sout.append("... attempting to execute the docker-compose command: '" + pb.command() + "'<br>");
-		pb.directory(new File("/opt/projects/testcompose/"));
+		pb.directory(new File("/opt/mfa-deploy/"));
 		Process p = pb.start();
 
 		DataInputStream dis = new DataInputStream(p.getInputStream());
