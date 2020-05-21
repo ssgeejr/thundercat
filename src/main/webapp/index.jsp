@@ -32,25 +32,49 @@
 		}else if(param.startsWith("redeploy.x")){
 	//		out.println("<h1>PROCESS</h1>");
 			cmd = "mfadeploy";
-			cmdlist = new String[]{"/opt/bin/mfadeploy"};
+			cmdlist = new String[]{"/opt/projects/dctest/dcdeploy"};
 			break;
 		}
 	}	
 
 	if (cmd != null){
-		ProcessBuilder pb = new ProcessBuilder(cmdlist);
-		pb.directory(new File("/opt/mfa-deploy"));
-		System.out.println("... executing command (" + pb.command() + ")");
+		ProcessBuilder builder = new ProcessBuilder(cmdlist).redirectErrorStream(true);
+		builder.directory(new File("/opt/projects/dctest"));
+		System.out.println("... executing command (" + builder.command() + ")");
 //		out.println("... executing command (" + pb.command() + ")");
-		sout.append("... attempting to execute the docker-compose command: '" + pb.command() + "'<br>");
-		Process p = pb.start();
-		DataInputStream dis = new DataInputStream(p.getInputStream());
-		String disr = dis.readLine();
-		while ( disr != null ) {
-   			sout.append(disr + "<br>");
-    		disr = dis.readLine();
-    	}//end while
-    	dis.close();
+		sout.append("... attempting to execute the docker-compose command: '" + builder.command() + "'<br>");
+		Process dockerComposeCommand = builder.start();
+		String path = System.getenv("PATH");
+        builder.environment().put("PATH","/usr/bin:"+path);
+        builder.redirectErrorStream(true);
+        builder.redirectError(ProcessBuilder.Redirect.INHERIT);
+
+        try {
+            dockerComposeCommand.waitFor();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(dockerComposeCommand.getInputStream()))) {
+                String line = reader.readLine();
+                while (line != null) {
+
+   // // strips off all non-ASCII characters
+   // text = text.replaceAll("[^\\x00-\\x7F]", "");
+ 
+   // // erases all the ASCII control characters
+   // text = text.replaceAll("[\\p{Cntrl}&&[^\r\n\t]]", "");
+     
+   // // removes non-printable characters from Unicode
+   // text = text.replaceAll("\\p{C}", "");
+
+
+//                	line = line.replaceAll("\\p{C}", "").replaceAll("[\\p{Cntrl}&&[^\r\n\t]]", "").replaceAll("[^\\x00-\\x7F]", "");
+					line = line.replaceAll("\\[1A", "").replaceAll("\\[1B", "").replaceAll("\\[2K", "").replaceAll("\\[32m", "").replaceAll("\\[0m", "");
+                	System.out.println(line);
+                	sout.append(line + "<br>");
+                    line = reader.readLine();
+                }
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
 	}//end if
 
 %>
