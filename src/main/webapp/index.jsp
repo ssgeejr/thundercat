@@ -38,7 +38,7 @@
 	}	
 
 	if (cmd != null){
-		ProcessBuilder pb = new ProcessBuilder(cmdlist);
+		ProcessBuilder pb = new ProcessBuilder(cmdlist).redirectErrorStream(true);
 		pb.directory(new File("/opt/mfa-deploy"));
 		System.out.println("... executing command (" + pb.command() + ")");
 //		out.println("... executing command (" + pb.command() + ")");
@@ -47,6 +47,7 @@
 		DataInputStream dis = new DataInputStream(p.getInputStream());
 		String disr = dis.readLine();
 		while ( disr != null ) {
+			disr = disr.replaceAll("\\p{C}", "").replaceAll("[\\p{Cntrl}&&[^\r\n\t]]", "").replaceAll("[^\\x00-\\x7F]", "").replaceAll("\\[1A", "").replaceAll("\\[1B", "").replaceAll("\\[2K", "").replaceAll("\\[32m", "");
    			sout.append(disr + "<br>");
     		disr = dis.readLine();
     	}//end while
