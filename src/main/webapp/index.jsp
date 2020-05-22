@@ -65,8 +65,8 @@
    // text = text.replaceAll("\\p{C}", "");
 
 
-//                	line = line.replaceAll("\\p{C}", "").replaceAll("[\\p{Cntrl}&&[^\r\n\t]]", "").replaceAll("[^\\x00-\\x7F]", "");
-					line = line.replaceAll("\\[1A", "").replaceAll("\\[1B", "").replaceAll("\\[2K", "").replaceAll("\\[32m", "").replaceAll("\\[0m", "");
+                	line = line.replaceAll("\\p{C}", "").replaceAll("[\\p{Cntrl}&&[^\r\n\t]]", "").replaceAll("[^\\x00-\\x7F]", "").replaceAll("\\[1A", "").replaceAll("\\[1B", "").replaceAll("\\[2K", "").replaceAll("\\[32m", "").
+//					line = line.replaceAll("\\[1A", "").replaceAll("\\[1B", "").replaceAll("\\[2K", "").replaceAll("\\[32m", "").replaceAll("\\[0m", "");
                 	System.out.println(line);
                 	sout.append(line + "<br>");
                     line = reader.readLine();
