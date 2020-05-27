@@ -12,17 +12,17 @@
 		if(param.startsWith("start.x")){
 	//		out.println("<h1>START</h1>");
 			cmd = "start";
-			cmdlist = new String[]{"docker-compose", "up", "-d"};
+			cmdlist = new String[]{"docker-compose", "--no-ansi", "up", "-d"};
 			break;
 		}else if(param.startsWith("stop.x")){
 	//		out.println("<h1>STOP</h1>");
 			cmd = "stop";
-			cmdlist = new String[]{"docker-compose", "down"};
+			cmdlist = new String[]{"docker-compose", "--no-ansi", "down"};
 			break;
 		}else if(param.startsWith("pull.x")){
 	//		out.println("<h1>PULL</h1>");
 			cmd = "pull";
-			cmdlist = new String[]{"docker-compose", "pull"};
+			cmdlist = new String[]{"docker-compose", "--no-ansi", "pull"};
 			break;
 		}else if(param.startsWith("process.x")){
 	//		out.println("<h1>PROCESS</h1>");
@@ -47,11 +47,10 @@
 		DataInputStream dis = new DataInputStream(p.getInputStream());
 		String disr = dis.readLine();
 		while ( disr != null ) {
-			disr = disr.replaceAll("\\p{C}", "").replaceAll("[\\p{Cntrl}&&[^\r\n\t]]", "").replaceAll("[^\\x00-\\x7F]", "").replaceAll("\\[1A", "").replaceAll("\\[1B", "").replaceAll("\\[2K", "").replaceAll("\\[32m", "");
    			sout.append(disr + "<br>");
-    		disr = dis.readLine();
-    	}//end while
-    	dis.close();
+    			disr = dis.readLine();
+    		}//end while
+    		dis.close();
 	}//end if
 
 %>
