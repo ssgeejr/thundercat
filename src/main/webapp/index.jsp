@@ -39,7 +39,7 @@
 	//		out.println("<h1>PROCESS</h1>");
 			cmd = "mfadeploy";
 			cmdlist = new String[]{"tree", "-a"};
-			workingDir="/opt/mfa-deploy/props_local"
+			workingDir="/opt/mfa-deploy/props_local";
 			break;
 		}else if(param.startsWith("reprops.x")){
 	//		out.println("<h1>PROCESS</h1>");
