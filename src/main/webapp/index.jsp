@@ -38,7 +38,7 @@
 		}else if(param.startsWith("propstree.x")){
 	//		out.println("<h1>PROCESS</h1>");
 			cmd = "mfadeploy";
-			cmdlist = new String[]{"sudo",tree", "-a"};
+			cmdlist = new String[]{"sudo","tree", "-a"};
 			workingDir="/opt/mfa-deploy/props_local";
 			break;
 		}else if(param.startsWith("reprops.x")){
