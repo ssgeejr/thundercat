@@ -6,6 +6,7 @@
 	Enumeration en=request.getParameterNames();
 	String cmd = null;
 	String[] cmdlist = null;
+	String workingDir="/opt/mfa-deploy";
 	while(en.hasMoreElements()) {
 		Object objOri=en.nextElement();
 		String param=(String)objOri;
@@ -38,6 +39,7 @@
 	//		out.println("<h1>PROCESS</h1>");
 			cmd = "mfadeploy";
 			cmdlist = new String[]{"tree", "-a"};
+			workingDir="/opt/mfa-deploy/props_local"
 			break;
 		}else if(param.startsWith("reprops.x")){
 	//		out.println("<h1>PROCESS</h1>");
@@ -48,7 +50,7 @@
 	}
 	if (cmd != null){
 		ProcessBuilder pb = new ProcessBuilder(cmdlist).redirectErrorStream(true);
-		pb.directory(new File("/opt/mfa-deploy"));
+		pb.directory(new File(workingDir));
 		System.out.println("... executing command (" + pb.command() + ")");
 //		out.println("... executing command (" + pb.command() + ")");
 		sout.append("... attempting to execute the docker-compose command: '" + pb.command() + "'<br>");
