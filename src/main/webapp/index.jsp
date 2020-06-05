@@ -34,9 +34,18 @@
 			cmd = "mfadeploy";
 			cmdlist = new String[]{"/opt/bin/mfadeploy"};
 			break;
+		}else if(param.startsWith("propstree.x")){
+	//		out.println("<h1>PROCESS</h1>");
+			cmd = "mfadeploy";
+			cmdlist = new String[]{"tree", "-a"};
+			break;
+		}else if(param.startsWith("reprops.x")){
+	//		out.println("<h1>PROCESS</h1>");
+			cmd = "mfadeploy";
+			cmdlist = new String[]{"/opt/bin/mfaprops"};
+			break;
 		}
-	}	
-
+			
 	if (cmd != null){
 		ProcessBuilder pb = new ProcessBuilder(cmdlist).redirectErrorStream(true);
 		pb.directory(new File("/opt/mfa-deploy"));
@@ -100,7 +109,15 @@
 			</tr>
 			<tr>
 				<td class="auto-style1" style="width:50%">REDEPLOY</td>
-				<td class="auto-style2"><input type="image" name="redeploy" value="4" alt="Process" src="mfadeploy.png"/></td>
+				<td class="auto-style2"><input type="image" name="redeploy" value="4" alt="Redeploy" src="mfadeploy.png"/></td>
+			</tr>
+			<tr>
+				<td class="auto-style1" style="width:50%">PROPS TREE</td>
+				<td class="auto-style2"><input type="image" name="propstree" value="5" alt="Properties Tree" src="tree.png"/></td>
+			</tr>
+			<tr>
+				<td class="auto-style1" style="width:50%">REDEPLOY PROPS</td>
+				<td class="auto-style2"><input type="image" name="reprops" value="6" alt="Redeploy Process" src="properties.png"/></td>
 			</tr>
 		</table>
 		</td>
