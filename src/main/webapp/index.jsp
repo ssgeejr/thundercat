@@ -31,18 +31,18 @@
 			cmdlist = new String[]{"docker-compose", "ps"};
 			break;
 		}else if(param.startsWith("redeploy.x")){
-	//		out.println("<h1>PROCESS</h1>");
+	//		out.println("<h1>REDEPLOY</h1>");
 			cmd = "mfadeploy";
 			cmdlist = new String[]{"/opt/bin/mfadeploy"};
 			break;
 		}else if(param.startsWith("propstree.x")){
-	//		out.println("<h1>PROCESS</h1>");
+	//		out.println("<h1>PROPSTREE</h1>");
 			cmd = "mfadeploy";
-			cmdlist = new String[]{"sudo","tree", "-a"};
+			cmdlist = new String[]{"sudo","tree", "-a", "--charset", "unicode"};
 			workingDir="/opt/mfa-deploy/props_local";
 			break;
 		}else if(param.startsWith("reprops.x")){
-	//		out.println("<h1>PROCESS</h1>");
+	//		out.println("<h1>REDEPLOY PROPS</h1>");
 			cmd = "mfadeploy";
 			cmdlist = new String[]{"/opt/bin/mfaprops"};
 			break;
@@ -125,7 +125,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td><%= sout.toString() %></td>
+		<td><pre><%= sout.toString() %></pre></td>
 	</tr>
 </table>
 </div>
