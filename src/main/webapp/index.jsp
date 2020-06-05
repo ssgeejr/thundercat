@@ -44,8 +44,8 @@
 			cmd = "mfadeploy";
 			cmdlist = new String[]{"/opt/bin/mfaprops"};
 			break;
-		}
-			
+		}		
+	}
 	if (cmd != null){
 		ProcessBuilder pb = new ProcessBuilder(cmdlist).redirectErrorStream(true);
 		pb.directory(new File("/opt/mfa-deploy"));
