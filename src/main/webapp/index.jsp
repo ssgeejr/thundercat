@@ -2,50 +2,66 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <%@ page import="java.util.*,java.io.*" %>
 <%
-StringBuffer sout = new StringBuffer();
-Enumeration en=request.getParameterNames();
-String cmd = null;
-String[] cmdlist = null;
-while(en.hasMoreElements()) {
-	Object objOri=en.nextElement();
-	String param=(String)objOri;
-	if(param.startsWith("start.x")){
-//		out.println("<h1>START</h1>");
-		cmd = "start";
-		cmdlist = new String[]{"docker-compose", "up", "-d"};
-		break;
-	}else if(param.startsWith("stop.x")){
-//		out.println("<h1>STOP</h1>");
-		cmd = "stop";
-		cmdlist = new String[]{"docker-compose", "down"};
-		break;
-	}else if(param.startsWith("pull.x")){
-//		out.println("<h1>PULL</h1>");
-		cmd = "pull";
-		cmdlist = new String[]{"docker-compose", "pull"};
-		break;
-	}else if(param.startsWith("process.x")){
-//		out.println("<h1>PROCESS</h1>");
-		cmd = "ps";
-		cmdlist = new String[]{"docker-compose", "ps"};
-		break;
+	StringBuffer sout = new StringBuffer();
+	Enumeration en=request.getParameterNames();
+	String cmd = null;
+	String[] cmdlist = null;
+	String workingDir="/opt/mfa-deploy";
+	while(en.hasMoreElements()) {
+		Object objOri=en.nextElement();
+		String param=(String)objOri;
+		if(param.startsWith("start.x")){
+	//		out.println("<h1>START</h1>");
+			cmd = "start";
+			cmdlist = new String[]{"docker-compose", "--no-ansi", "up", "-d"};
+			break;
+		}else if(param.startsWith("stop.x")){
+	//		out.println("<h1>STOP</h1>");
+			cmd = "stop";
+			cmdlist = new String[]{"docker-compose", "--no-ansi", "down"};
+			break;
+		}else if(param.startsWith("pull.x")){
+	//		out.println("<h1>PULL</h1>");
+			cmd = "pull";
+			cmdlist = new String[]{"docker-compose", "--no-ansi", "pull"};
+			break;
+		}else if(param.startsWith("process.x")){
+	//		out.println("<h1>PROCESS</h1>");
+			cmd = "ps";
+			cmdlist = new String[]{"docker-compose", "ps"};
+			break;
+		}else if(param.startsWith("redeploy.x")){
+	//		out.println("<h1>REDEPLOY</h1>");
+			cmd = "mfadeploy";
+			cmdlist = new String[]{"/opt/bin/mfadeploy"};
+			break;
+		}else if(param.startsWith("propstree.x")){
+	//		out.println("<h1>PROPSTREE</h1>");
+			cmd = "mfadeploy";
+			cmdlist = new String[]{"sudo","tree", "-a", "--charset", "unicode"};
+			workingDir="/opt/mfa-deploy/props_local";
+			break;
+		}else if(param.startsWith("reprops.x")){
+	//		out.println("<h1>REDEPLOY PROPS</h1>");
+			cmd = "mfadeploy";
+			cmdlist = new String[]{"/opt/bin/mfaprops"};
+			break;
+		}		
 	}
-}	
 	if (cmd != null){
-		ProcessBuilder pb = new ProcessBuilder(cmdlist);
+		ProcessBuilder pb = new ProcessBuilder(cmdlist).redirectErrorStream(true);
+		pb.directory(new File(workingDir));
 		System.out.println("... executing command (" + pb.command() + ")");
 //		out.println("... executing command (" + pb.command() + ")");
 		sout.append("... attempting to execute the docker-compose command: '" + pb.command() + "'<br>");
-		pb.directory(new File("/opt/projects/testcompose/"));
 		Process p = pb.start();
-
 		DataInputStream dis = new DataInputStream(p.getInputStream());
 		String disr = dis.readLine();
 		while ( disr != null ) {
    			sout.append(disr + "<br>");
-    		disr = dis.readLine();
-    	}//end while
-    	dis.close();
+    			disr = dis.readLine();
+    		}//end while
+    		dis.close();
 	}//end if
 
 %>
@@ -93,11 +109,23 @@ while(en.hasMoreElements()) {
 				<td class="auto-style1" style="width:50%">PROCESS</td>
 				<td class="auto-style2"><input type="image" name="process" value="3" alt="Process" src="process.png"/></td>
 			</tr>
+			<tr>
+				<td class="auto-style1" style="width:50%">REDEPLOY</td>
+				<td class="auto-style2"><input type="image" name="redeploy" value="4" alt="Redeploy" src="mfadeploy.png"/></td>
+			</tr>
+			<tr>
+				<td class="auto-style1" style="width:50%">PROPS TREE</td>
+				<td class="auto-style2"><input type="image" name="propstree" value="5" alt="Properties Tree" src="tree.png"/></td>
+			</tr>
+			<tr>
+				<td class="auto-style1" style="width:50%">REDEPLOY PROPS</td>
+				<td class="auto-style2"><input type="image" name="reprops" value="6" alt="Redeploy Process" src="properties.png"/></td>
+			</tr>
 		</table>
 		</td>
 	</tr>
 	<tr>
-		<td><%= sout.toString() %></td>
+		<td><pre><%= sout.toString() %></pre></td>
 	</tr>
 </table>
 </div>
