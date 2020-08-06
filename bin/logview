@@ -1,0 +1,19 @@
+#!/bin/python
+
+import subprocess
+import re
+
+ansi_escape = re.compile(r'\x1B\[[0-?]*[ -/]*[@-~]')
+
+containers = subprocess.Popen("docker ps -q", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]
+for c in containers.split("\n"):
+	if c:
+		print("Container ID: %s" % (c));
+		command = "docker exec " + c + " ls -lah /logs";
+		xlogs = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).communicate()[0];
+        	logs = 	ansi_escape.sub('', xlogs)
+		for l in logs.rsplit("\n"):
+			if ".log" in l:
+				lline=l.split()
+				print("   %s %s" % (lline[4], lline[8]))
+		print("...............................................");

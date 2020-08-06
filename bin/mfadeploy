@@ -1,0 +1,41 @@
+#!/bin/bash
+
+crntdt=`date +%y%m%d%H%M%S`
+echo $crntdt
+
+mkdir /opt/log/$crntdt
+
+. /etc/profile
+echo "ENV_MFA_PROP=${ENV_MFA_PROP}" | tee /opt/log/$crntdt/mfadeploy.log
+echo "ENV_MFA_PROP=${ENV_MFA_PROP}" > /opt/mfa-deploy/.env 
+
+echo 'moving to mfa-props directory' | tee -a /opt/log/$crntdt/mfadeploy.log
+cd /opt/mfa-props
+
+echo 'pulling latest changes for origin dev' | tee -a /opt/log/$crntdt/mfadeploy.log
+git pull origin dev 2>&1 | tee -a /opt/log/$crntdt/mfadeploy.log
+
+echo 'copying files to props_local' | tee -a /opt/log/$crntdt/mfadeploy.log
+sudo cp -R * ../mfa-deploy/props_local/ 2>&1  | tee -a /opt/log/$crntdt/mfadeploy.log
+
+echo 'changing permissions on files in props_local' | tee -a /opt/log/$crntdt/mfadeploy.log
+sudo chmod 766 ../mfa-deploy/props_local/* 2>&1  | tee -a /opt/log/$crntdt/mfadeploy.log
+
+echo 'moving to mfa-deploy directory' | tee -a /opt/log/$crntdt/mfadeploy.log
+cd /opt/mfa-deploy
+
+echo 'pulling any changes from dev' | tee -a /opt/log/$crntdt/mfadeploy.log
+docker-compose --no-ansi down 2>&1  | tee -a /opt/log/$crntdt/mfadeploy.log
+
+echo 'pulling any changes from dev' | tee -a /opt/log/$crntdt/mfadeploy.log
+git pull origin dev 2>&1 | tee -a /opt/log/$crntdt/mfadeploy.log
+
+echo 'pulling any new images' | tee -a /opt/log/$crntdt/mfadeploy.log
+docker-compose --no-ansi pull 2>&1 | tee -a /opt/log/$crntdt/mfadeploy.log
+
+echo 'backing up configurations' | tee -a /opt/log/$crntdt/mfadeploy.log
+cp -R /opt/mfa-deploy/props_local /opt/log/$crntdt/
+cp /opt/mfa-deploy/docker-compose.yml /opt/log/$crntdt/
+
+echo 'bringing system back online'
+docker-compose --no-ansi up -d 2>&1 | tee -a /opt/log/$crntdt/mfadeploy.log

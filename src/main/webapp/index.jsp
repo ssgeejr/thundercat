@@ -31,20 +31,25 @@
 			cmdlist = new String[]{"docker-compose", "ps"};
 			break;
 		}else if(param.startsWith("redeploy.x")){
-	//		out.println("<h1>REDEPLOY</h1>");
+	//		out.println("<h1>PROCESS</h1>");
 			cmd = "mfadeploy";
 			cmdlist = new String[]{"/opt/bin/mfadeploy"};
 			break;
 		}else if(param.startsWith("propstree.x")){
-	//		out.println("<h1>PROPSTREE</h1>");
+	//		out.println("<h1>PROCESS</h1>");
 			cmd = "mfadeploy";
 			cmdlist = new String[]{"sudo","tree", "-a", "--charset", "unicode"};
 			workingDir="/opt/mfa-deploy/props_local";
 			break;
 		}else if(param.startsWith("reprops.x")){
-	//		out.println("<h1>REDEPLOY PROPS</h1>");
+	//		out.println("<h1>PROCESS</h1>");
 			cmd = "mfadeploy";
 			cmdlist = new String[]{"/opt/bin/mfaprops"};
+			break;
+		}else if(param.startsWith("logview.x")){
+	//		out.println("<h1>PROCESS</h1>");
+			cmd = "logview";
+			cmdlist = new String[]{"/opt/bin/logview"};
 			break;
 		}		
 	}
@@ -88,7 +93,7 @@
 <table style="width: 400pt; border: 1px solid red;">
 	<tr>
 		<td class="auto-style3">
-		<img height="98" src="thundercats_logo.png" width="323" /></td>
+		<a href="/"><img height="98" src="thundercats_logo.png" width="323" /></a></td>
 	</tr>
 	<tr>
 		<td>
@@ -120,6 +125,10 @@
 			<tr>
 				<td class="auto-style1" style="width:50%">REDEPLOY PROPS</td>
 				<td class="auto-style2"><input type="image" name="reprops" value="6" alt="Redeploy Process" src="properties.png"/></td>
+			</tr>
+			<tr>
+				<td class="auto-style1" style="width:50%">VIEW CONTAINER LOG SIZE</td>
+				<td class="auto-style2"><input type="image" name="logview" value="7" alt="View Container Logs" src="logicon.png"/></td>
 			</tr>
 		</table>
 		</td>
