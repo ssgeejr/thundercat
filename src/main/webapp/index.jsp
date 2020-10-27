@@ -130,6 +130,10 @@
 				<td class="auto-style1" style="width:50%">VIEW CONTAINER LOG SIZE</td>
 				<td class="auto-style2"><input type="image" name="logview" value="7" alt="View Container Logs" src="logicon.png"/></td>
 			</tr>
+			<tr>
+				<td class="auto-style1" style="width:50%">RESTART DOCKER SERVICE</td>
+				<td class="auto-style2"><input type="image" name="logview" value="8" alt="Restart Docker Service" src="restart.png"/></td>
+			</tr>
 		</table>
 		</td>
 	</tr>
