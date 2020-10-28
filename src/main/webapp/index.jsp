@@ -51,6 +51,11 @@
 			cmd = "logview";
 			cmdlist = new String[]{"/opt/bin/logview"};
 			break;
+		}else if(param.startsWith("restart.x")){
+	//		out.println("<h1>PROCESS</h1>");
+			cmd = "bouncedocker";
+			cmdlist = new String[]{"/opt/bin/bouncedocker"};
+			break;
 		}		
 	}
 	if (cmd != null){
@@ -132,7 +137,7 @@
 			</tr>
 			<tr>
 				<td class="auto-style1" style="width:50%">RESTART DOCKER SERVICE</td>
-				<td class="auto-style2"><input type="image" name="logview" value="8" alt="Restart Docker Service" src="restart.png"/></td>
+				<td class="auto-style2"><input type="image" name="restart" value="8" alt="Restart Docker Service" src="restart.png"/></td>
 			</tr>
 		</table>
 		</td>
